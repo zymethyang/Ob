@@ -154,35 +154,54 @@
 	        console.log('Completed');
 	    }
 	)
-	*/
-	var myPromise = new Promise(function (resolve, reject) {
+
+	const myPromise = new Promise((resolve,reject)=>{
 	    console.log('Creating Promise');
-	    setTimeout(function () {
+	    setTimeout(()=>{
 	        resolve('Hello from promise');
-	    }, 3000);
-	});
-	/*
+	    },3000);
+	})
+
 	myPromise.then(x=>{
 	    console.log(x);
 	})
 
-	*/
 
-	var source = _Rx2.default.Observable.fromPromise(myPromise);
+	const source = Rx.Observable.fromPromise(myPromise);
 
-	source.subscribe(function (x) {
-	    return console.log(x);
-	});
+	source.subscribe(x=>console.log(x));
 
-	function getUser(username) {
-	    return _jquery2.default.ajax({
-	        url: 'https://api.github.com/users/' + username,
-	        dataType: 'jsonp'
+
+	function getUser(username){
+	    return $.ajax({
+	        url:'https://api.github.com/users/'+username,
+	        dataType:'jsonp'
 	    }).promise();
 	}
 
-	_Rx2.default.Observable.fromPromise(getUser('zymethyang')).subscribe(function (x) {
+	Rx.Observable.fromPromise(getUser('zymethyang'))
+	.subscribe(x=>console.log(x));
+
+	const source = Rx.Observable.interval(1000);
+	source.subscribe(x=>console.log(x));
+
+
+	const source = Rx.Observable.timer(5000,2000).take(5);
+
+	source.subscribe(
+	    x=>console.log(x),
+	    error => console.log(error),
+	    ()=>console.log('Completed')
+	)
+	*/
+
+	var source = _Rx2.default.Observable.range(25, 100);
+	source.subscribe(function (x) {
 	    return console.log(x);
+	}, function (err) {
+	    return console.log(err);
+	}, function () {
+	    return console.log('Completed');
 	});
 
 /***/ }),
