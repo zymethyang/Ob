@@ -134,11 +134,25 @@ source.subscribe(
     error => console.log(error),
     ()=>console.log('Completed')
 )
-*/
+
 
 const source = Rx.Observable.range(25,100);
 source.subscribe(
     x=>console.log(x),
     err=>console.log(err),
+    ()=>console.log('Completed')
+)
+
+*/
+
+
+//Get value, apply function after that return to array.
+const source = Rx.Observable.interval(1000)
+.take(10)
+.map(val=> val*val );
+
+source.subscribe(
+    x=>console.log(x),
+    error => console.log(error),
     ()=>console.log('Completed')
 )

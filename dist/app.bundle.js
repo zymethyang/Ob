@@ -193,13 +193,26 @@
 	    error => console.log(error),
 	    ()=>console.log('Completed')
 	)
+
+
+	const source = Rx.Observable.range(25,100);
+	source.subscribe(
+	    x=>console.log(x),
+	    err=>console.log(err),
+	    ()=>console.log('Completed')
+	)
+
 	*/
 
-	var source = _Rx2.default.Observable.range(25, 100);
+	//Get value, apply function after that return to array.
+	var source = _Rx2.default.Observable.interval(1000).take(10).map(function (val) {
+	    return val * val;
+	});
+
 	source.subscribe(function (x) {
 	    return console.log(x);
-	}, function (err) {
-	    return console.log(err);
+	}, function (error) {
+	    return console.log(error);
 	}, function () {
 	    return console.log('Completed');
 	});
