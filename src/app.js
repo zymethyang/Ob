@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import Rx from 'rxjs/Rx';
 import data from './data';
-
+/*
 
 console.log('RxJS Boiler Running...');
 
@@ -70,3 +70,28 @@ numberStream.subscribe(
 )
 
 console.log(data);
+*/
+const source = new Rx.Observable(ob=>{
+    console.log('Creating Observable');
+    ob.next('Hello World');
+    ob.next('Another Value');
+    ob.error(new Error('Something wrong'));
+    setTimeout(()=>{
+        ob.next('Yet, another value');
+        ob.complete();
+    },3000);
+});
+
+source
+.catch(err => Rx.Observable.of(err))
+.subscribe(
+    x=>{
+        console.log(x);
+    },
+    err=>{
+        console.log(err);
+    },
+    complete=>{
+        console.log('Completed');
+    }
+)
