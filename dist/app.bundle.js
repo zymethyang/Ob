@@ -60,11 +60,36 @@
 
 	var btn = (0, _jquery2.default)('.btn');
 	var btnStream = _Rx2.default.Observable.fromEvent(btn, 'click');
+	var output = (0, _jquery2.default)('#output');
+	var output_1 = (0, _jquery2.default)('#output_1');
 
 	btnStream.subscribe(function (e) {
 	    console.log('Clicked');
 	}, function (err) {
 	    console.log(err);
+	}, function () {
+	    console.log('Completed');
+	});
+
+	var input = (0, _jquery2.default)('input');
+	var inputStream = _Rx2.default.Observable.fromEvent(input, 'keyup');
+
+	inputStream.subscribe(function (value) {
+	    console.log(value.currentTarget.value);
+	    output.append(value.currentTarget.value);
+	}, function (error) {
+	    console.log(error);
+	}, function () {
+	    console.log('Completed');
+	});
+
+	var mouseStream = _Rx2.default.Observable.fromEvent(document, 'mousemove');
+
+	mouseStream.subscribe(function (value) {
+	    output_1.html('<h1>X: ' + value.clientX + ' Y :' + value.clientY + '</h1>');
+	    console.log('X: ' + value.clientX + ' Y :' + value.clientY);
+	}, function (error) {
+	    console.log(error);
 	}, function () {
 	    console.log('Completed');
 	});
