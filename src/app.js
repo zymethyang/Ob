@@ -70,7 +70,7 @@ numberStream.subscribe(
 )
 
 console.log(data);
-*/
+
 const source = new Rx.Observable(ob=>{
     console.log('Creating Observable');
     ob.next('Hello World');
@@ -95,3 +95,31 @@ source
         console.log('Completed');
     }
 )
+*/
+const myPromise = new Promise((resolve,reject)=>{
+    console.log('Creating Promise');
+    setTimeout(()=>{
+        resolve('Hello from promise');
+    },3000);
+})
+/*
+myPromise.then(x=>{
+    console.log(x);
+})
+
+*/
+
+const source = Rx.Observable.fromPromise(myPromise);
+
+source.subscribe(x=>console.log(x));
+
+
+function getUser(username){
+    return $.ajax({
+        url:'https://api.github.com/users/'+username,
+        dataType:'jsonp'
+    }).promise();
+}
+
+Rx.Observable.fromPromise(getUser('zymethyang'))
+.subscribe(x=>console.log(x));

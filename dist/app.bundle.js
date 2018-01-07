@@ -129,26 +129,60 @@
 	)
 
 	console.log(data);
-	*/
-	var source = new _Rx2.default.Observable(function (ob) {
+
+	const source = new Rx.Observable(ob=>{
 	    console.log('Creating Observable');
 	    ob.next('Hello World');
 	    ob.next('Another Value');
 	    ob.error(new Error('Something wrong'));
-	    setTimeout(function () {
+	    setTimeout(()=>{
 	        ob.next('Yet, another value');
 	        ob.complete();
-	    }, 3000);
+	    },3000);
 	});
 
-	source.catch(function (err) {
-	    return _Rx2.default.Observable.of(err);
-	}).subscribe(function (x) {
+	source
+	.catch(err => Rx.Observable.of(err))
+	.subscribe(
+	    x=>{
+	        console.log(x);
+	    },
+	    err=>{
+	        console.log(err);
+	    },
+	    complete=>{
+	        console.log('Completed');
+	    }
+	)
+	*/
+	var myPromise = new Promise(function (resolve, reject) {
+	    console.log('Creating Promise');
+	    setTimeout(function () {
+	        resolve('Hello from promise');
+	    }, 3000);
+	});
+	/*
+	myPromise.then(x=>{
 	    console.log(x);
-	}, function (err) {
-	    console.log(err);
-	}, function (complete) {
-	    console.log('Completed');
+	})
+
+	*/
+
+	var source = _Rx2.default.Observable.fromPromise(myPromise);
+
+	source.subscribe(function (x) {
+	    return console.log(x);
+	});
+
+	function getUser(username) {
+	    return _jquery2.default.ajax({
+	        url: 'https://api.github.com/users/' + username,
+	        dataType: 'jsonp'
+	    }).promise();
+	}
+
+	_Rx2.default.Observable.fromPromise(getUser('zymethyang')).subscribe(function (x) {
+	    return console.log(x);
 	});
 
 /***/ }),
