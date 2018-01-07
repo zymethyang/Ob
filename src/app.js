@@ -143,7 +143,7 @@ source.subscribe(
     ()=>console.log('Completed')
 )
 
-*/
+
 
 
 //Get value, apply function after that return to array.
@@ -156,3 +156,18 @@ source.subscribe(
     error => console.log(error),
     ()=>console.log('Completed')
 )
+
+
+
+//Get online property you want
+const users = [
+    {name:'Will',age:34},
+    {name:'Mike',age:33},
+    {name:'Paul',age:35}
+]
+
+const usersStream = Rx.Observable.from(users)
+    .pluck('name');
+usersStream.subscribe(x=>console.log(x));
+*/
+
