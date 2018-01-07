@@ -159,7 +159,7 @@ source.subscribe(
 
 
 
-//Get online property you want
+//Get one property you want
 const users = [
     {name:'Will',age:34},
     {name:'Mike',age:33},
@@ -169,5 +169,25 @@ const users = [
 const usersStream = Rx.Observable.from(users)
     .pluck('name');
 usersStream.subscribe(x=>console.log(x));
-*/
 
+
+//Merge two Observable when it run
+Rx.Observable.of('Hello')
+.merge(Rx.Observable.of('Everyone'))
+.subscribe(x=>console.log(x));
+
+
+
+const source_1 = Rx.Observable.interval(2000).map(v=>'Merge 1 '+v);
+const source_2 = Rx.Observable.interval(1000).map(v=>'Merge 2 '+v);
+Rx.Observable.merge(source_1,source_2)
+.take(25)
+.subscribe(x=> console.log(x));
+*/
+//concat like merge but it run after source_1 finished
+
+const source_1 = Rx.Observable.range(0,5).map(v=>'Merge 1 '+v);
+const source_2 = Rx.Observable.range(6,5).map(v=>'Merge 2 '+v);
+Rx.Observable.concat(source_1,source_2)
+.take(25)
+.subscribe(x=> console.log(x));
